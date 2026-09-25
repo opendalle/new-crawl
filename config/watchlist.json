@@ -1,0 +1,116 @@
+{
+  "_readme": "Edit this file to choose what the crawler watches. ats_boards: companies' public job boards (slug = the part after boards.greenhouse.io/, jobs.lever.co/ or jobs.ashbyhq.com/). The 6 boards below were checked live on 2026-09-23. ir_pages: investor-relations / disclosure pages to scan for minutes, outcomes and transcripts. Set enabled:true after adding real URLs.",
+  "focus_locations": [
+    "India",
+    "Bengaluru",
+    "Bangalore",
+    "Mumbai",
+    "Navi Mumbai",
+    "Thane",
+    "Pune",
+    "Hyderabad",
+    "Chennai",
+    "Gurugram",
+    "Gurgaon",
+    "Noida",
+    "New Delhi",
+    "Delhi",
+    "Kolkata",
+    "Ahmedabad",
+    "GIFT City",
+    "Kochi",
+    "Coimbatore",
+    "Jaipur",
+    "Singapore",
+    "Dubai",
+    "London",
+    "New York",
+    "San Francisco"
+  ],
+  "ats_boards": [
+    {
+      "company": "Stripe",
+      "ats": "greenhouse",
+      "board": "stripe",
+      "country": "USA"
+    },
+    {
+      "company": "Databricks",
+      "ats": "greenhouse",
+      "board": "databricks",
+      "country": "USA"
+    },
+    {
+      "company": "Rubrik",
+      "ats": "greenhouse",
+      "board": "rubrik",
+      "country": "USA"
+    },
+    {
+      "company": "Palantir",
+      "ats": "lever",
+      "board": "palantir",
+      "country": "USA"
+    },
+    {
+      "company": "Meesho",
+      "ats": "lever",
+      "board": "meesho",
+      "country": "India"
+    },
+    {
+      "company": "Ramp",
+      "ats": "ashby",
+      "board": "ramp",
+      "country": "USA"
+    }
+  ],
+  "ir_pages": [
+    {
+      "company": "Example Ltd",
+      "url": "https://www.example.com/investors/disclosures",
+      "country": "India",
+      "max_docs": 10,
+      "enabled": false
+    }
+  ],
+  "sec_fulltext_queries": [
+    {
+      "q": "\"lease agreement\" \"square feet\"",
+      "forms": "8-K"
+    },
+    {
+      "q": "\"office space\" \"square feet\"",
+      "forms": "8-K"
+    },
+    {
+      "q": "\"new headquarters\" lease",
+      "forms": "8-K"
+    },
+    {
+      "q": "\"data center\" lease megawatts",
+      "forms": "8-K"
+    },
+    {
+      "q": "\"purchase and sale agreement\" property",
+      "forms": "8-K"
+    },
+    {
+      "q": "\"lease termination\" office",
+      "forms": "8-K"
+    },
+    {
+      "q": "\"India\" \"global capability center\"",
+      "forms": "8-K,10-Q,10-K"
+    }
+  ],
+  "limits": {
+    "bse_max_pages_per_day": 40,
+    "doc_downloads_per_run": 120,
+    "sec_fts_max_hits_per_query": 100,
+    "sec_form_d_max_forms": 250,
+    "sec_form_d_min_usd": 10000000,
+    "news_max_age_hours": 72,
+    "llm_max_items": 60
+  }
+}

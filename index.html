@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS ASIA — Global CRE Intelligence Terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060609;--surface:#0c0c14;--card:#10101a;--border:#1a1a2e;--border2:#22223a;--accent:#e8ff47;--accent2:#47ffe8;--red:#ff3b5c;--green:#00e676;--orange:#ffab00;--blue:#4fc3f7;--purple:#b39ddb;--muted:#5a5a7a;--muted2:#7a7a9a;--text:#e0e0f0;--font:'IBM Plex Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:13px}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden}
+a{color:inherit}
+.topbar{background:#04040a;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:32px;font-size:10px;color:var(--muted2);position:sticky;top:0;z-index:200;gap:12px}
+.topbar-brand{color:var(--accent);font-weight:600;letter-spacing:.15em;font-size:11px}
+.topbar-tag{color:var(--muted);font-size:9px;letter-spacing:.08em;border:1px solid var(--border);padding:1px 6px}
+.topbar-left,.topbar-right{display:flex;align-items:center;gap:14px;white-space:nowrap;overflow:hidden}
+.topbar-stat{display:flex;align-items:center;gap:5px}.topbar-stat .val{color:var(--accent);font-weight:600}
+.live-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 2s infinite}
+.live-dot.off{background:var(--red);animation:none}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.ticker-bar{background:#08080f;border-bottom:2px solid var(--accent);height:26px;overflow:hidden;display:flex;align-items:center;position:sticky;top:32px;z-index:199}
+.ticker-label{background:var(--accent);color:#000;font-size:9px;font-weight:700;letter-spacing:.15em;padding:0 10px;height:100%;display:flex;align-items:center;white-space:nowrap;flex-shrink:0}
+.ticker-track{flex:1;overflow:hidden}
+.ticker-content{display:inline-flex;align-items:center;animation:ticker-scroll 80s linear infinite;white-space:nowrap}
+.ticker-content:hover{animation-play-state:paused}
+@keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ticker-content{animation:none}.live-dot{animation:none}}
+.t-item{display:inline-flex;align-items:center;gap:5px;padding:0 14px;height:26px;font-size:10px;border-right:1px solid var(--border);color:var(--muted2)}
+.t-type{font-size:8px;font-weight:700;padding:1px 4px;letter-spacing:.08em}.t-co{color:#fff;font-weight:600}
+nav{background:rgba(6,6,9,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px;position:sticky;top:58px;z-index:198}
+.nav-left{display:flex;align-items:center;gap:14px}
+.logo{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--accent);letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.logo-sub{font-family:var(--font);font-size:8px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-top:1px}
+.nav-divider{width:1px;height:28px;background:var(--border)}
+.nav-right{display:flex;align-items:center;gap:14px;font-size:10px;color:var(--muted)}
+.nav-clock{font-size:11px;color:var(--accent2);font-weight:600;font-variant-numeric:tabular-nums}
+main{max-width:1600px;margin:0 auto;padding:16px 20px 40px}
+.kpi-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:16px}
+.kpi{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.kpi-val{font-size:22px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1}
+.kpi-label{font-size:9px;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase}.kpi-sub{font-size:9px;color:var(--muted)}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:14px}
+.tab{font-family:var(--font);font-size:11px;letter-spacing:.12em;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted2);padding:9px 16px;cursor:pointer}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .n{color:var(--muted);font-size:9px;margin-left:6px}
+.geo-bar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.geo-pill{display:flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--border);padding:5px 10px;cursor:pointer;font-size:10px;color:var(--muted2);transition:all .15s;user-select:none;font-family:var(--font)}
+.geo-pill:hover,.geo-pill.active{border-color:var(--accent);color:var(--accent)}.geo-pill.active{background:rgba(232,255,71,.06)}
+.geo-pill .cnt{font-weight:700;color:var(--muted);font-size:9px}.geo-pill.active .cnt{color:var(--accent)}
+.filter-row{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;align-items:center}
+.filter-label{font-size:9px;color:var(--muted2);letter-spacing:.12em;text-transform:uppercase;margin-right:2px;min-width:52px}
+.fbtn{font-family:var(--font);font-size:10px;background:var(--surface);border:1px solid var(--border);color:var(--muted2);padding:4px 10px;cursor:pointer;letter-spacing:.06em;transition:all .12s}
+.fbtn:hover,.fbtn.active{border-color:var(--accent);color:var(--accent);background:rgba(232,255,71,.05)}.fbtn.active{font-weight:600}
+.fbtn.alt.active{border-color:var(--accent2);color:var(--accent2);background:rgba(71,255,232,.05)}
+.search-bar{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);padding:8px 14px;margin:12px 0 14px}
+.search-bar input{flex:1;background:none;border:none;outline:none;font-family:var(--font);font-size:11px;color:var(--text);min-width:0}
+.search-bar input::placeholder{color:var(--muted)}.search-count{font-size:10px;color:var(--muted2);white-space:nowrap}
+.table-wrap{border:1px solid var(--border);overflow:hidden}
+.table-head,.signal-row{display:grid;grid-template-columns:96px 170px minmax(0,1fr) 130px 84px 104px;gap:10px;padding:8px 14px}
+.table-head{background:#0a0a12;border-bottom:1px solid var(--border)}
+.th-cell{font-size:9px;color:var(--muted2);letter-spacing:.12em;text-transform:uppercase}
+.signal-row{padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;align-items:start;min-width:0}
+.signal-row:hover,.signal-row.open{background:var(--card)}
+.s-badge{display:inline-flex;align-items:center;font-size:8px;font-weight:700;padding:2px 6px;letter-spacing:.1em;white-space:nowrap}
+.s-urgency{font-size:8px;color:var(--muted);margin-top:3px}
+.s-company{font-size:11px;font-weight:600;color:#fff;line-height:1.3;word-break:break-word}
+.s-exchange{font-size:9px;color:var(--muted2);margin-top:2px}
+.s-summary{font-size:10px;color:var(--muted2);line-height:1.5;word-break:break-word}
+.s-ev{font-size:10px;color:var(--text);margin-top:4px;line-height:1.5;border-left:2px solid var(--accent2);padding-left:8px;word-break:break-word}
+.s-loc{font-size:10px;color:var(--text)}.s-country{font-size:9px;color:var(--muted2);margin-top:2px}
+.conf-bar{height:3px;background:var(--border);margin-top:5px}.conf-fill{height:100%}.conf-val{font-size:10px;color:var(--muted2)}
+.s-date{font-size:9px;color:var(--muted2)}.s-source{font-size:9px;color:var(--muted);margin-top:2px;word-break:break-all}
+.detail{grid-column:1/-1;display:none;border-top:1px dashed var(--border2);margin-top:6px;padding-top:8px;font-size:10px;color:var(--muted2);line-height:1.6}
+.signal-row.open .detail{display:block}
+.detail b{color:var(--text);font-weight:600}
+.detail a{color:var(--accent2);text-decoration:none;margin-right:14px}.detail a:hover{text-decoration:underline}
+.chip{display:inline-block;font-size:8px;border:1px solid var(--border2);padding:1px 5px;margin-right:4px;letter-spacing:.08em;color:var(--muted2)}
+.empty-state{padding:60px 20px;text-align:center;color:var(--muted2);font-size:11px;line-height:1.8}
+.msg{padding:10px 14px;font-size:11px;margin-bottom:12px;line-height:1.6}
+.msg.err{background:rgba(255,59,92,.1);border:1px solid rgba(255,59,92,.3);color:var(--red)}
+.msg.info{background:rgba(71,255,232,.06);border:1px solid rgba(71,255,232,.25);color:var(--accent2)}
+.msg code{background:#000;padding:1px 4px}
+.ev-head,.ev-row{display:grid;grid-template-columns:110px 200px 120px minmax(0,1fr) 70px;gap:10px;padding:9px 14px}
+.ev-head{background:#0a0a12;border-bottom:1px solid var(--border)}
+.ev-row{border-bottom:1px solid var(--border);font-size:10px;align-items:start}
+.ev-date{color:var(--accent2);font-weight:600}.ev-days{font-size:9px;color:var(--muted2)}
+.ev-purpose{color:var(--muted2);line-height:1.5;word-break:break-word}
+.cre-yes{color:var(--green);font-weight:700;font-size:9px}.cre-no{color:var(--muted);font-size:9px}
+.health-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--border);border:1px solid var(--border)}
+.h-card{background:var(--surface);padding:12px 14px;font-size:10px;line-height:1.7;color:var(--muted2)}
+.h-card .h-name{font-size:11px;color:#fff;font-weight:600;letter-spacing:.06em}
+.ok{color:var(--green)}.bad{color:var(--red)}.warn{color:var(--orange)}
+.pagination{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 0;flex-wrap:wrap}
+.page-btn{font-family:var(--font);font-size:10px;background:var(--surface);border:1px solid var(--border);color:var(--muted2);padding:5px 12px;cursor:pointer}
+.page-btn:hover,.page-btn.active{border-color:var(--accent);color:var(--accent)}.page-btn:disabled{opacity:.3;cursor:default}
+.page-info{font-size:10px;color:var(--muted2);padding:0 8px}
+.footer{border-top:1px solid var(--border);padding:14px 20px;font-size:9px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:30px;letter-spacing:.08em}
+.b-office{background:#0d2b1e;color:#00e676}.b-lease{background:#0d1e2b;color:#4fc3f7}.b-expand{background:#1e0d2b;color:#b39ddb}
+.b-funding{background:#2b1e0d;color:#ffab00}.b-hiring{background:#2b0d0d;color:#ff6b6b}.b-warehouse{background:#0d2b2b;color:#47ffe8}
+.b-relocate{background:#2b2b0d;color:#e8ff47}.b-dc{background:#0d0d2b;color:#818cf8}.b-distress{background:#2b0d1a;color:#ff3b5c}
+.b-filing{background:#1a1a0d;color:#d4a017}
+.hidden{display:none!important}
+/* chat */
+.chat-fab{position:fixed;bottom:24px;right:24px;z-index:1000;width:52px;height:52px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;font-size:20px;box-shadow:0 4px 20px rgba(232,255,71,.3)}
+.chat-window{position:fixed;bottom:88px;right:24px;z-index:1000;width:380px;max-width:calc(100vw - 32px);height:520px;max-height:calc(100vh - 120px);background:var(--surface);border:1px solid var(--border);display:none;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.6)}
+.chat-window.open{display:flex}
+.chat-header{background:#0a0a14;border-bottom:1px solid var(--border);padding:12px 14px;display:flex;align-items:center;justify-content:space-between}
+.chat-header-title{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.1em}.chat-header-sub{font-size:9px;color:var(--muted2)}
+.chat-close{background:none;border:none;color:var(--muted2);cursor:pointer;font-size:14px;padding:2px 6px}
+.chat-messages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
+.chat-msg{max-width:92%;font-size:11px;line-height:1.6;padding:8px 10px;white-space:pre-wrap;word-break:break-word}
+.chat-msg.user{align-self:flex-end;background:rgba(232,255,71,.1);border:1px solid rgba(232,255,71,.2);color:var(--accent)}
+.chat-msg.ai{align-self:flex-start;background:var(--card);border:1px solid var(--border)}
+.chat-msg .srcs{margin-top:6px;font-size:9px;color:var(--muted2)}.chat-msg .srcs a{color:var(--accent2)}
+.chat-input-row{border-top:1px solid var(--border);padding:10px 12px;display:flex;gap:8px}
+.chat-input{flex:1;min-width:0;background:var(--card);border:1px solid var(--border);font-family:var(--font);font-size:11px;color:var(--text);padding:7px 10px;outline:none}
+.chat-send{background:var(--accent);border:none;cursor:pointer;color:#000;font-family:var(--font);font-size:10px;font-weight:700;padding:7px 12px}
+@media(max-width:1400px){.table-head,.signal-row{grid-template-columns:84px 140px minmax(0,1fr) 110px 76px 90px}}
+@media(max-width:900px){
+  html{font-size:12px}.topbar-tag,.nav-divider,.logo-sub,.hide-m{display:none}
+  .topbar,nav{padding:0 16px}main{padding:14px 16px 40px}
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .table-head,.ev-head{display:none}.signal-row,.ev-row{grid-template-columns:1fr;gap:6px}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-left"><span class="topbar-brand">⬡ NEXUS ASIA</span><span class="topbar-tag">GLOBAL CRE INTELLIGENCE TERMINAL</span><span style="font-size:9px">v5.0</span></div>
+  <div class="topbar-right">
+    <div class="topbar-stat"><div class="live-dot" id="live-dot"></div><span id="live-label">LIVE</span></div>
+    <div class="topbar-stat hide-m"><span>🇮🇳</span><span class="val" id="tn-india">—</span></div>
+    <div class="topbar-stat hide-m"><span>🇺🇸</span><span class="val" id="tn-usa">—</span></div>
+    <div class="topbar-stat"><span id="last-crawl">—</span></div>
+  </div>
+</div>
+<div class="ticker-bar"><div class="ticker-label">⬡ LIVE INTEL</div><div class="ticker-track"><div class="ticker-content" id="ticker-content"><div class="t-item"><span class="t-co">Loading signals…</span></div></div></div></div>
+<nav>
+  <div class="nav-left"><div class="logo"><span>⬡</span><div><div>NEXUS PROP INTEL</div><div class="logo-sub">Filings · Meetings · Hiring · News — every signal quotes its source</div></div></div></div>
+  <div class="nav-right"><span id="signal-count-nav" style="color:var(--accent);font-weight:700">—</span><span>signals</span><div class="nav-divider"></div><span class="nav-clock" id="nav-clock">--:--:--</span></div>
+</nav>
+
+<main>
+  <div id="msg-container"></div>
+  <div class="kpi-strip">
+    <div class="kpi"><div class="kpi-val" id="kpi-total">—</div><div class="kpi-label">Signals (filtered)</div></div>
+    <div class="kpi"><div class="kpi-val" id="kpi-companies">—</div><div class="kpi-label">Companies</div></div>
+    <div class="kpi"><div class="kpi-val" id="kpi-hconf">—</div><div class="kpi-label">High confidence</div><div class="kpi-sub">score ≥ 75</div></div>
+    <div class="kpi"><div class="kpi-val" id="kpi-today">—</div><div class="kpi-label">Today</div><div class="kpi-sub">new signals</div></div>
+    <div class="kpi"><div class="kpi-val" id="kpi-filings" style="color:var(--orange)">—</div><div class="kpi-label">From filings</div><div class="kpi-sub">BSE · NSE · SEC</div></div>
+    <div class="kpi"><div class="kpi-val" id="kpi-events" style="color:var(--accent2)">—</div><div class="kpi-label">Upcoming</div><div class="kpi-sub">CRE-relevant meetings</div></div>
+    <div class="kpi"><div class="kpi-val" id="kpi-high" style="color:var(--red)">—</div><div class="kpi-label">High priority</div><div class="kpi-sub">lead score ≥ 80</div></div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="signals">SIGNALS<span class="n" id="tab-n-signals"></span></button>
+    <button class="tab" data-tab="events">UPCOMING<span class="n" id="tab-n-events"></span></button>
+    <button class="tab" data-tab="health">SOURCE HEALTH</button>
+  </div>
+
+  <!-- ─────────── SIGNALS ─────────── -->
+  <section id="pane-signals">
+    <div class="geo-bar" id="geo-bar"></div>
+    <div class="filter-row" id="type-row"><span class="filter-label">Signal</span></div>
+    <div class="filter-row" id="src-row"><span class="filter-label">Source</span></div>
+    <div class="filter-row" id="date-row"><span class="filter-label">Date</span></div>
+    <div class="search-bar"><span style="color:var(--muted)">⌕</span><input type="text" id="search-input" placeholder="Search company, location, evidence, filing category…" autocomplete="off"><span class="search-count" id="search-count">—</span></div>
+    <div class="table-wrap">
+      <div class="table-head"><div class="th-cell">Signal</div><div class="th-cell">Company</div><div class="th-cell">What happened · evidence</div><div class="th-cell">Location</div><div class="th-cell">Confidence</div><div class="th-cell">When · source</div></div>
+      <div id="signals-container"><div class="empty-state">Connecting to intelligence feed…</div></div>
+    </div>
+    <div class="pagination" id="pagination"></div>
+  </section>
+
+  <!-- ─────────── EVENTS ─────────── -->
+  <section id="pane-events" class="hidden">
+    <div class="filter-row"><span class="filter-label">Show</span>
+      <button class="fbtn alt active" data-ev="cre">CRE-relevant only</button><button class="fbtn alt" data-ev="all">All meetings</button></div>
+    <div class="msg info" style="margin-top:8px">Board meetings and results dates companies have already notified to the exchange, with the agenda in their own words. These are the earliest public signs that a fund raise, acquisition or property decision is coming.</div>
+    <div class="table-wrap">
+      <div class="ev-head"><div class="th-cell">Date</div><div class="th-cell">Company</div><div class="th-cell">Type</div><div class="th-cell">Agenda (verbatim)</div><div class="th-cell">CRE</div></div>
+      <div id="events-container"><div class="empty-state">Loading…</div></div>
+    </div>
+  </section>
+
+  <!-- ─────────── HEALTH ─────────── -->
+  <section id="pane-health" class="hidden">
+    <div id="health-meta" class="msg info">Loading last crawl report…</div>
+    <div class="health-grid" id="health-grid"></div>
+  </section>
+</main>
+
+<footer class="footer"><span>⬡ NEXUS ASIA — Global CRE Intelligence Terminal · v5.0</span><span id="footer-updated">—</span></footer>
+
+<button class="chat-fab hidden" id="chat-fab" title="Ask Nexus" aria-label="Open chat">⬡</button>
+<div class="chat-window" id="chat-window" role="dialog" aria-label="Ask Nexus">
+  <div class="chat-header"><div><div class="chat-header-title">⬡ ASK NEXUS</div><div class="chat-header-sub">Answers only from the live feed, with citations</div></div><button class="chat-close" id="chat-close" aria-label="Close">✕</button></div>
+  <div class="chat-messages" id="chat-messages"><div class="chat-msg ai">Ask about companies, cities or signal types in the feed. Every answer cites the records it used.</div></div>
+  <div class="chat-input-row"><input class="chat-input" id="chat-input" placeholder="e.g. Which companies signed leases in Pune?" autocomplete="off" maxlength="500"><button class="chat-send" id="chat-send">ASK →</button></div>
+</div>
+
+<script src="nexus-config.js"></script>
+<script>
+"use strict";
+// ── config: never hard-code keys here. /api/config serves the ANON key from env. ──
+const PAGE_SIZE = 50;
+const S = { cfg: null, signals: [], events: [], runs: [], filtered: [], page: 1,
+            type: "ALL", src: "ALL", days: 7, geo: "ALL", q: "", evMode: "cre", open: new Set() };
+
+const TYPES = ["ALL","LEASE","OFFICE","EXPAND","RELOCATE","HIRING","FUNDING","WAREHOUSE","DATA CENTRE","DISTRESS","FILING"];
+const BC = {OFFICE:"b-office",LEASE:"b-lease",EXPAND:"b-expand",FUNDING:"b-funding",HIRING:"b-hiring",WAREHOUSE:"b-warehouse","DATA CENTRE":"b-dc",DATACENTER:"b-dc",RELOCATE:"b-relocate",DISTRESS:"b-distress",FILING:"b-filing"};
+const SRC_GROUPS = {
+  ALL: () => true,
+  EXCHANGE: s => /^(BSE|NSE)/.test(s.data_source || ""),
+  SEC: s => /^SEC/.test(s.data_source || ""),
+  JOBS: s => /^ATS_/.test(s.data_source || ""),
+  WEBSITE: s => (s.data_source || "") === "IR_PAGE",
+  NEWS: s => !/^(BSE|NSE|SEC|ATS_|IR_PAGE)/.test(s.data_source || ""),
+};
+const SRC_LABEL = {ALL:"ALL",EXCHANGE:"BSE / NSE",SEC:"SEC EDGAR",JOBS:"JOB BOARDS",WEBSITE:"COMPANY SITES",NEWS:"NEWS"};
+const FLAGS = {India:"🇮🇳",USA:"🇺🇸",UK:"🇬🇧",Singapore:"🇸🇬",UAE:"🇦🇪",Japan:"🇯🇵",Australia:"🇦🇺","Hong Kong":"🇭🇰","South Korea":"🇰🇷",Malaysia:"🇲🇾",Indonesia:"🇮🇩",Germany:"🇩🇪",Canada:"🇨🇦",France:"🇫🇷",Vietnam:"🇻🇳",Thailand:"🇹🇭",Philippines:"🇵🇭",Global:"🌐",China:"🇨🇳"};
+const eq = k => s => (s.country || s.region || "") === k;
+const GEO = {
+  ALL:{f:()=>true,l:"All markets",i:"🌐"}, India:{f:s=>(s.region||s.country)==="India",l:"India",i:"🇮🇳"},
+  India_Impact:{f:s=>s.region==="India_Impact",l:"India impact",i:"🌏"}, USA:{f:eq("USA"),l:"USA",i:"🇺🇸"},
+  UK:{f:eq("UK"),l:"UK",i:"🇬🇧"}, Singapore:{f:eq("Singapore"),l:"Singapore",i:"🇸🇬"}, UAE:{f:eq("UAE"),l:"UAE",i:"🇦🇪"},
+  Japan:{f:eq("Japan"),l:"Japan",i:"🇯🇵"}, Australia:{f:eq("Australia"),l:"Australia",i:"🇦🇺"},
+  China_HK:{f:s=>["Hong Kong","China","China_HK"].includes(s.country||s.region),l:"HK / China",i:"🇭🇰"},
+  SEA:{f:s=>["Malaysia","Indonesia","Vietnam","Thailand","Philippines","SEA"].includes(s.country||s.region),l:"SE Asia",i:"🌏"},
+  Global:{f:s=>["Global","global"].includes(s.country||s.region),l:"Global",i:"🌐"},
+};
+
+// ── utils ───────────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeUrl = u => { try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : ""; } catch { return ""; } };
+const coName = s => s.company_name || s.companies?.company_name || "—";
+function ago(dt){ if(!dt) return "—"; const d=Date.now()-new Date(dt); if(isNaN(d)) return "—";
+  if(d<6e4) return "just now"; if(d<36e5) return Math.floor(d/6e4)+"m ago"; if(d<864e5) return Math.floor(d/36e5)+"h ago"; return Math.floor(d/864e5)+"d ago"; }
+function showMsg(html, kind="err"){ $("msg-container").innerHTML = `<div class="msg ${kind}">${html}</div>`; }
+function clock(){ $("nav-clock").textContent = new Date().toLocaleTimeString("en-IN",{hour12:false}); }
+setInterval(clock, 1000); clock();
+
+// ── data ────────────────────────────────────────────────────────────────────
+async function loadConfig(){
+  const params = new URLSearchParams(location.search);
+  if (params.get("local") === "1") return { local: true };
+  let chat = false;
+  try { const r = await fetch("/api/config"); if (r.ok) { const c = await r.json(); chat = !!c.chat;
+      if (c.supabaseUrl && c.supabaseAnonKey) return c; if (c.error) throw new Error(c.error); } }
+  catch (e) { if (/service_role/.test(e.message)) { showMsg(esc(e.message)); return null; } }
+  if (window.NEXUS_CONFIG && window.NEXUS_CONFIG.supabaseUrl) return { ...window.NEXUS_CONFIG, chat: chat || !!window.NEXUS_CONFIG.chat };
+  return null;
+}
+function isServiceKey(k){ try { return JSON.parse(atob(k.split(".")[1].replace(/-/g,"+").replace(/_/g,"/"))).role === "service_role"; } catch { return false; } }
+
+async function sb(path){
+  const r = await fetch(`${S.cfg.supabaseUrl}/rest/v1/${path}`, { headers: { apikey: S.cfg.supabaseAnonKey, Authorization: `Bearer ${S.cfg.supabaseAnonKey}` } });
+  if (!r.ok) throw new Error(`${path.split("?")[0]}: HTTP ${r.status}`);
+  return r.json();
+}
+async function loadAll(){
+  if (S.cfg.local) {                                   // python tools/export_json.py → data/feed.json
+    const r = await fetch("data/feed.json"); const d = await r.json();
+    S.signals = d.signals || []; S.events = d.events || []; S.runs = d.runs || []; return;
+  }
+  try { S.signals = await sb("signal_feed?select=*&order=created_at.desc&limit=2000"); }
+  catch (e) { S.signals = await sb("signals?select=*,companies(company_name)&order=created_at.desc&limit=2000"); }
+  const today = new Date().toISOString().slice(0,10);
+  try { S.events = await sb(`event_calendar?select=*&event_date=gte.${today}&order=event_date.asc&limit=1000`); } catch { S.events = []; }
+  try { S.runs = await sb("crawl_runs?select=*&order=finished_at.desc&limit=1"); } catch { S.runs = []; }
+}
+
+// ── filters UI ──────────────────────────────────────────────────────────────
+function buildFilters(){
+  $("geo-bar").innerHTML = Object.entries(GEO).map(([k,g]) =>
+    `<button class="geo-pill ${k===S.geo?"active":""}" data-geo="${k}"><span>${g.i}</span><span>${esc(g.l)}</span><span class="cnt">${S.signals.filter(g.f).length}</span></button>`).join("");
+  $("type-row").innerHTML = `<span class="filter-label">Signal</span>` + TYPES.map(t => `<button class="fbtn ${t===S.type?"active":""}" data-type="${t}">${t}</button>`).join("");
+  $("src-row").innerHTML = `<span class="filter-label">Source</span>` + Object.keys(SRC_GROUPS).map(k => `<button class="fbtn alt ${k===S.src?"active":""}" data-src="${k}">${SRC_LABEL[k]} <span style="color:var(--muted)">${S.signals.filter(SRC_GROUPS[k]).length}</span></button>`).join("");
+  $("date-row").innerHTML = `<span class="filter-label">Date</span>` + [[-1,"All time"],[0,"Today"],[3,"3 days"],[7,"7 days"],[30,"30 days"]].map(([d,l]) => `<button class="fbtn alt ${d===S.days?"active":""}" data-days="${d}">${l}</button>`).join("");
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-geo],[data-type],[data-src],[data-days],[data-ev],[data-tab],[data-page]");
+  if (!b) return;
+  if (b.dataset.geo) S.geo = b.dataset.geo;
+  if (b.dataset.type) S.type = b.dataset.type;
+  if (b.dataset.src) S.src = b.dataset.src;
+  if (b.dataset.days !== undefined) S.days = parseInt(b.dataset.days, 10);
+  if (b.dataset.ev) { S.evMode = b.dataset.ev; document.querySelectorAll("[data-ev]").forEach(x => x.classList.toggle("active", x === b)); renderEvents(); return; }
+  if (b.dataset.tab) { document.querySelectorAll(".tab").forEach(x => x.classList.toggle("active", x === b));
+    ["signals","events","health"].forEach(t => $("pane-"+t).classList.toggle("hidden", t !== b.dataset.tab)); return; }
+  if (b.dataset.page) { S.page = parseInt(b.dataset.page, 10); renderPage(); window.scrollTo({top:0,behavior:"smooth"}); return; }
+  buildFilters(); apply();
+});
+$("search-input").addEventListener("input", e => { S.q = e.target.value; apply(); });
+
+function apply(){
+  let f = S.signals;
+  if (S.days !== -1) { const c = new Date(); if (S.days > 0) c.setDate(c.getDate() - S.days); c.setHours(0,0,0,0); f = f.filter(s => !s.created_at || new Date(s.created_at) >= c); }
+  f = f.filter(GEO[S.geo].f).filter(SRC_GROUPS[S.src]);
+  if (S.type !== "ALL") f = f.filter(s => (s.signal_type || "").toUpperCase() === S.type);
+  if (S.q.trim()) { const q = S.q.toLowerCase(); f = f.filter(s => [coName(s), s.summary, s.title, s.evidence, s.location, s.signal_type, s.country, s.data_source, s.category, s.why_cre].join(" ").toLowerCase().includes(q)); }
+  S.filtered = f; S.page = 1; renderPage(); kpis(f);
+  $("search-count").textContent = f.length + " signals";
+}
+
+// ── render ──────────────────────────────────────────────────────────────────
+function kpis(f){
+  const t0 = new Date(); t0.setHours(0,0,0,0);
+  $("kpi-total").textContent = f.length.toLocaleString();
+  $("kpi-companies").textContent = new Set(f.map(s => s.company_id)).size.toLocaleString();
+  $("kpi-hconf").textContent = f.filter(s => (+s.confidence_score || 0) >= 75).length;
+  $("kpi-today").textContent = f.filter(s => s.created_at && new Date(s.created_at) >= t0).length;
+  $("kpi-filings").textContent = f.filter(s => SRC_GROUPS.EXCHANGE(s) || SRC_GROUPS.SEC(s)).length;
+  $("kpi-events").textContent = S.events.filter(e => e.cre_relevant).length;
+  $("kpi-high").textContent = f.filter(s => (s.priority_level || "") === "HIGH").length;
+  $("signal-count-nav").textContent = S.signals.length.toLocaleString();
+  $("tn-india").textContent = S.signals.filter(GEO.India.f).length;
+  $("tn-usa").textContent = S.signals.filter(GEO.USA.f).length;
+  $("tab-n-signals").textContent = S.signals.length;
+  $("tab-n-events").textContent = S.events.filter(e => e.cre_relevant).length;
+}
+function row(s){
+  const type = (s.signal_type || "FILING").toUpperCase(), conf = Math.round(+s.confidence_score || 0);
+  const urg = s.urgency || "MEDIUM", urgC = urg === "CRITICAL" ? "#ff0055" : urg === "HIGH" ? "var(--red)" : "var(--muted2)";
+  const src = safeUrl(s.source_url), doc = safeUrl(s.doc_url);
+  const id = esc(s.signal_id || s.source_key || Math.random());
+  const extras = [s.sqft ? `${Number(s.sqft).toLocaleString("en-IN")} sq ft` : "", s.headcount ? `${s.headcount} roles` : "", s.funding_amount || ""].filter(Boolean);
+  return `<div class="signal-row ${S.open.has(id)?"open":""}" data-id="${id}">
+    <div><span class="s-badge ${BC[type]||"b-filing"}">${esc(type)}</span><div class="s-urgency" style="color:${urgC}">${esc(urg)}</div></div>
+    <div><div class="s-company">${esc(coName(s))}</div><div class="s-exchange">${esc(s.exchange || s.category || "")}</div></div>
+    <div><div class="s-summary">${esc((s.title || s.summary || "").slice(0,180))}</div>
+      ${s.evidence ? `<div class="s-ev">“${esc(s.evidence.slice(0,260))}${s.evidence.length>260?"…":""}”</div>` : ""}
+      ${extras.length ? `<div style="margin-top:4px">${extras.map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>` : ""}</div>
+    <div><div class="s-loc">${esc(s.location || "—")}</div><div class="s-country">${FLAGS[s.country]||"🌐"} ${esc(s.country || "")}</div></div>
+    <div><div class="conf-val">${conf}</div><div class="conf-bar"><div class="conf-fill" style="width:${Math.min(conf,100)}%;background:${conf>=75?"var(--green)":conf>=50?"var(--accent)":"var(--muted)"}"></div></div></div>
+    <div><div class="s-date">${ago(s.published_at || s.created_at)}</div><div class="s-source">${esc((s.data_source||"").replace(/^GNEWS_/,"").slice(0,24))}</div></div>
+    <div class="detail">
+      ${s.evidence ? `<div><b>Evidence (verbatim from source):</b> “${esc(s.evidence)}”</div>` : ""}
+      ${s.why_cre ? `<div><b>Why flagged:</b> ${esc(s.why_cre)}</div>` : ""}
+      ${s.summary && s.summary !== s.title ? `<div><b>Summary:</b> ${esc(s.summary)}</div>` : ""}
+      <div><b>Extraction:</b> ${esc(s.extraction || "legacy")} · <b>Category:</b> ${esc(s.category || "—")} · <b>Published:</b> ${esc((s.published_at||"").slice(0,16).replace("T"," ") || "—")} · <b>Captured:</b> ${esc((s.created_at||"").slice(0,16).replace("T"," "))}</div>
+      <div style="margin-top:4px">${src ? `<a href="${esc(src)}" target="_blank" rel="noopener noreferrer">Open source ↗</a>` : ""}${doc && doc !== src ? `<a href="${esc(doc)}" target="_blank" rel="noopener noreferrer">Filing document ↗</a>` : ""}${s.lead_score != null ? `<span class="chip">lead score ${esc(s.lead_score)} · ${esc(s.priority_level||"")}</span>` : ""}</div>
+    </div></div>`;
+}
+$("signals-container").addEventListener("click", e => {
+  if (e.target.closest("a")) return;
+  const r = e.target.closest(".signal-row"); if (!r) return;
+  const id = r.dataset.id; S.open.has(id) ? S.open.delete(id) : S.open.add(id); r.classList.toggle("open");
+});
+function renderPage(){
+  const pages = Math.max(1, Math.ceil(S.filtered.length / PAGE_SIZE)); S.page = Math.min(S.page, pages);
+  const slice = S.filtered.slice((S.page-1)*PAGE_SIZE, S.page*PAGE_SIZE);
+  $("signals-container").innerHTML = slice.length ? slice.map(row).join("") :
+    `<div class="empty-state">${S.signals.length ? "No signals match these filters." : "No signals yet. Run the crawler (GitHub Actions → Run workflow) to populate the feed."}</div>`;
+  const pg = $("pagination"); if (pages <= 1) { pg.innerHTML = ""; return; }
+  const set = new Set([1, pages]); for (let i = Math.max(1, S.page-2); i <= Math.min(pages, S.page+2); i++) set.add(i);
+  let h = `<button class="page-btn" data-page="${S.page-1}" ${S.page===1?"disabled":""}>← Prev</button>`, prev = 0;
+  [...set].sort((a,b)=>a-b).forEach(p => { if (p-prev>1) h += `<span class="page-info">…</span>`; h += `<button class="page-btn ${p===S.page?"active":""}" data-page="${p}">${p}</button>`; prev = p; });
+  h += `<button class="page-btn" data-page="${S.page+1}" ${S.page===pages?"disabled":""}>Next →</button><span class="page-info">${(S.page-1)*PAGE_SIZE+1}–${Math.min(S.page*PAGE_SIZE, S.filtered.length)} of ${S.filtered.length}</span>`;
+  pg.innerHTML = h;
+}
+function renderEvents(){
+  const list = S.evMode === "cre" ? S.events.filter(e => e.cre_relevant) : S.events;
+  const today = new Date(); today.setHours(0,0,0,0);
+  $("events-container").innerHTML = list.length ? list.map(e => {
+    const d = e.event_date ? new Date(e.event_date + "T00:00:00") : null, days = d ? Math.round((d - today) / 864e5) : null, u = safeUrl(e.source_url);
+    return `<div class="ev-row"><div><div class="ev-date">${esc(e.event_date || "date n/a")}</div><div class="ev-days">${days==null?"":days===0?"today":days>0?`in ${days} day${days>1?"s":""}`:`${-days}d ago`}</div></div>
+      <div class="s-company">${esc(e.company_name || "—")}<div class="s-exchange">${esc(e.nse_symbol || e.bse_code || e.data_source || "")}</div></div>
+      <div>${esc(e.event_type)}</div>
+      <div class="ev-purpose">${esc(e.purpose || "")}${u ? ` <a href="${esc(u)}" target="_blank" rel="noopener noreferrer" style="color:var(--accent2)">↗</a>` : ""}</div>
+      <div>${e.cre_relevant ? '<span class="cre-yes">YES</span>' : '<span class="cre-no">—</span>'}</div></div>`;
+  }).join("") : `<div class="empty-state">No upcoming ${S.evMode==="cre"?"CRE-relevant ":""}events in the feed.</div>`;
+}
+function renderHealth(){
+  const run = S.runs[0];
+  if (!run) { $("health-meta").textContent = "No crawl report stored yet."; $("health-grid").innerHTML = ""; return; }
+  const rep = typeof run.report === "string" ? JSON.parse(run.report) : run.report || {};
+  const fin = run.finished_at || rep.finished_at;
+  $("last-crawl").textContent = "Crawl " + ago(fin);
+  const st = rep.stats || {};
+  $("health-meta").innerHTML = `Last crawl finished <b>${esc(ago(fin))}</b> · ${esc(st.signals_new || 0)} new signals · ${esc(st.events || 0)} events · ${esc(rep.docs_read || 0)} documents read · store: ${esc(rep.store || "")}`;
+  $("health-grid").innerHTML = Object.entries(rep.sources || {}).map(([k, h]) => {
+    const cls = !h.ok ? "bad" : h.items ? "ok" : "warn", lbl = !h.ok ? "FAILED" : h.items ? "OK" : "EMPTY";
+    const extra = Object.entries(h).filter(([x]) => !["ok","items","secs","error"].includes(x) && typeof h[x] !== "object").map(([x,v]) => `${esc(x)}: ${esc(v)}`).join(" · ");
+    const dead = Array.isArray(h.dead_feeds) && h.dead_feeds.length ? `<div class="warn">dead feeds: ${esc(h.dead_feeds.slice(0,6).join(", "))}${h.dead_feeds.length>6?"…":""}</div>` : "";
+    return `<div class="h-card"><div class="h-name">${esc(k.toUpperCase())} <span class="${cls}">● ${lbl}</span></div><div>items: ${esc(h.items || 0)} · ${esc(h.secs || 0)}s</div>${extra ? `<div>${extra}</div>` : ""}${h.error ? `<div class="bad">${esc(h.error)}</div>` : ""}${dead}</div>`;
+  }).join("");
+}
+function ticker(){
+  const items = S.signals.filter(s => s.evidence || s.summary).slice(0, 40); if (!items.length) return;
+  const h = items.map(s => { const t = (s.signal_type||"FILING").toUpperCase();
+    return `<div class="t-item"><span class="t-type ${BC[t]||"b-filing"}">${esc(t)}</span><span class="t-co">${esc(coName(s).slice(0,24))}</span><span>${FLAGS[s.country]||"🌐"}</span><span style="font-size:9px">${esc((s.location||"").slice(0,16))}</span></div>`; }).join("");
+  $("ticker-content").innerHTML = h + h; $("ticker-content").style.animationDuration = Math.max(40, items.length * 2.5) + "s";
+}
+
+// ── chat ────────────────────────────────────────────────────────────────────
+function chatMsg(text, cls, sources){
+  const d = document.createElement("div"); d.className = "chat-msg " + cls; d.textContent = text;
+  if (sources && sources.length) { const s = document.createElement("div"); s.className = "srcs";
+    s.innerHTML = "Sources: " + sources.map(x => { const u = safeUrl(x.url); return u ? `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(x.id)} ${esc(x.company)}</a>` : `${esc(x.id)} ${esc(x.company)}`; }).join(" · ");
+    d.appendChild(s); }
+  $("chat-messages").appendChild(d); $("chat-messages").scrollTop = 1e9; return d;
+}
+async function ask(){
+  const q = $("chat-input").value.trim(); if (!q) return; $("chat-input").value = "";
+  chatMsg(q, "user"); const wait = chatMsg("Reading the feed…", "ai");
+  try { const r = await fetch("/api/chat", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({question:q}) });
+    const d = await r.json(); wait.remove(); chatMsg(d.answer || d.error || "No answer.", "ai", d.sources); }
+  catch (e) { wait.remove(); chatMsg("Chat unavailable: " + e.message, "ai"); }
+}
+$("chat-fab").onclick = () => { $("chat-window").classList.toggle("open"); $("chat-input").focus(); };
+$("chat-close").onclick = () => $("chat-window").classList.remove("open");
+$("chat-send").onclick = ask;
+$("chat-input").addEventListener("keydown", e => { if (e.key === "Enter") ask(); });
+
+// ── boot ────────────────────────────────────────────────────────────────────
+async function refresh(){
+  try { await loadAll(); $("live-dot").classList.remove("off"); $("live-label").textContent = "LIVE"; }
+  catch (e) { $("live-dot").classList.add("off"); $("live-label").textContent = "OFFLINE"; showMsg("Could not load data: " + esc(e.message)); }
+  buildFilters(); apply(); renderEvents(); renderHealth(); ticker();
+  $("footer-updated").textContent = "Refreshed " + new Date().toLocaleString("en-IN", {dateStyle:"medium", timeStyle:"short"});
+}
+(async () => {
+  S.cfg = await loadConfig();
+  if (!S.cfg) {
+    showMsg(`Dashboard not configured. On Vercel set <code>SUPABASE_URL</code> and <code>SUPABASE_ANON_KEY</code> (the <b>anon</b> key). For local SQLite runs: <code>python tools/export_json.py</code> then open <code>index.html?local=1</code> via a local web server.`, "info");
+    $("signals-container").innerHTML = ""; buildFilters(); return;
+  }
+  if (!S.cfg.local && isServiceKey(S.cfg.supabaseAnonKey)) { showMsg("Refusing to run with a service_role key in the browser. Use the anon key."); return; }
+  if (S.cfg.chat) $("chat-fab").classList.remove("hidden");
+  await refresh();
+  setInterval(refresh, 5 * 60 * 1000);
+})();
+</script>
+</body>
+</html>

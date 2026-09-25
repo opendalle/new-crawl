@@ -1,0 +1,221 @@
+{
+  "rss_feeds": [
+    {
+      "url": "https://realty.economictimes.indiatimes.com/rss/topstories",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "realty.economictimes.indiatimes.com"
+    },
+    {
+      "url": "https://economictimes.indiatimes.com/industry/services/property-/-cstruction/rssfeeds/13358319.cms",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "economictimes.indiatimes.com"
+    },
+    {
+      "url": "https://www.business-standard.com/rss/companies-101.rss",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "business-standard.com"
+    },
+    {
+      "url": "https://www.livemint.com/rss/companies",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "livemint.com"
+    },
+    {
+      "url": "https://www.livemint.com/rss/real-estate",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "livemint.com"
+    },
+    {
+      "url": "https://inc42.com/feed/",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "inc42.com"
+    },
+    {
+      "url": "https://yourstory.com/feed",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "yourstory.com"
+    },
+    {
+      "url": "https://entrackr.com/feed/",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "entrackr.com"
+    },
+    {
+      "url": "https://housing.com/news/feed/",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "housing.com"
+    },
+    {
+      "url": "https://www.moneycontrol.com/rss/business.xml",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "moneycontrol.com"
+    },
+    {
+      "url": "https://www.thehindu.com/business/feeder/default.rss",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "thehindu.com"
+    },
+    {
+      "url": "https://timesofindia.indiatimes.com/rssfeeds/1898055.cms",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "timesofindia.indiatimes.com"
+    },
+    {
+      "url": "https://www.financialexpress.com/feed/",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "financialexpress.com"
+    },
+    {
+      "url": "https://www.vccircle.com/feed",
+      "region": "India",
+      "country": "India",
+      "tier": 1,
+      "label": "vccircle.com"
+    },
+    {
+      "url": "https://www.dealstreetasia.com/feed",
+      "region": "Asia",
+      "country": "Singapore",
+      "tier": 1,
+      "label": "dealstreetasia.com"
+    },
+    {
+      "url": "https://www.businesstimes.com.sg/rss/all",
+      "region": "Singapore",
+      "country": "Singapore",
+      "tier": 1,
+      "label": "businesstimes.com.sg"
+    },
+    {
+      "url": "https://www.straitstimes.com/rss/business",
+      "region": "Singapore",
+      "country": "Singapore",
+      "tier": 1,
+      "label": "straitstimes.com"
+    },
+    {
+      "url": "https://www.arabianbusiness.com/rss",
+      "region": "UAE",
+      "country": "UAE",
+      "tier": 1,
+      "label": "arabianbusiness.com"
+    },
+    {
+      "url": "https://gulfnews.com/rss",
+      "region": "UAE",
+      "country": "UAE",
+      "tier": 2,
+      "label": "gulfnews.com"
+    },
+    {
+      "url": "https://www.scmp.com/rss/91/feed",
+      "region": "China_HK",
+      "country": "Hong Kong",
+      "tier": 1,
+      "label": "scmp.com"
+    },
+    {
+      "url": "https://www.afr.com/rss",
+      "region": "Australia",
+      "country": "Australia",
+      "tier": 1,
+      "label": "afr.com"
+    },
+    {
+      "url": "https://therealdeal.com/feed/",
+      "region": "USA",
+      "country": "USA",
+      "tier": 1,
+      "label": "therealdeal.com"
+    },
+    {
+      "url": "https://www.globest.com/feed/",
+      "region": "USA",
+      "country": "USA",
+      "tier": 1,
+      "label": "globest.com"
+    },
+    {
+      "url": "https://www.commercialobserver.com/feed/",
+      "region": "USA",
+      "country": "USA",
+      "tier": 1,
+      "label": "commercialobserver.com"
+    },
+    {
+      "url": "https://www.bisnow.com/rss",
+      "region": "USA",
+      "country": "USA",
+      "tier": 1,
+      "label": "bisnow.com"
+    },
+    {
+      "url": "https://techcrunch.com/feed/",
+      "region": "USA",
+      "country": "USA",
+      "tier": 2,
+      "label": "techcrunch.com"
+    },
+    {
+      "url": "https://japantoday.com/feed",
+      "region": "Japan",
+      "country": "Japan",
+      "tier": 2,
+      "label": "japantoday.com"
+    },
+    {
+      "url": "https://www.koreaherald.com/rss/020100000000.xml",
+      "region": "Korea",
+      "country": "South Korea",
+      "tier": 2,
+      "label": "koreaherald.com"
+    },
+    {
+      "url": "https://thestar.com.my/rss/business",
+      "region": "SEA",
+      "country": "Malaysia",
+      "tier": 2,
+      "label": "thestar.com.my"
+    },
+    {
+      "url": "https://www.bangkokpost.com/rss/data/topstories.xml",
+      "region": "SEA",
+      "country": "Thailand",
+      "tier": 2,
+      "label": "bangkokpost.com"
+    },
+    {
+      "url": "https://www.philstar.com/rss/business",
+      "region": "SEA",
+      "country": "Philippines",
+      "tier": 2,
+      "label": "philstar.com"
+    }
+  ]
+}

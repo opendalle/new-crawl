@@ -1,0 +1,14 @@
+# Static dashboard (index.html) + serverless functions (api/) only.
+*.py
+requirements*.txt
+crawler/
+nlp/
+scoring/
+database/
+config/
+tests/
+tools/
+data/
+.env
+.env.*
+.github/
